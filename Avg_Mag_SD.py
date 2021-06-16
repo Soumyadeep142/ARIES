@@ -84,6 +84,8 @@ for (i,j) in zip(idn, mag_list):
 	
 #Removing Outliers
 co=0
+mag_list_array=[]
+error_list_array=[]
 for j in range(len(mag_list)):
 	co+=1
 	print('Star{0}'.format(co))
@@ -105,7 +107,27 @@ for j in range(len(mag_list)):
 		error_list[j]=final_error_list
 		avg_mag[j]=avg_magn
 		SD_mag[j]=SD_magn
+	mag_list_array.append(mag_list_new)
+	error_list_array.append(final_error_list)
+
+idn_final=[]
+mag_list=[]
+error_list=[]
+j=0
+for i in range(len(idn)):
+	if len(mag_list_array[j])/len(stdfiles)>=0.25:
+		idn_final.append(idn[i])
+		mag_list.append(mag_list_array[j])
+		error_list.append(error_list_array[j])
+	j+=1
 	
+avg_mag=[]
+SD_mag=[]
+for (i,j) in zip(idn, mag_list):
+	avg_mag.append(statistics.mean(j))
+	SD_mag.append(statistics.stdev(j))
+idn=idn_final
+
 data=column_stack((idn, avg_mag, SD_mag))
 savetxt('Mag_avg_SD.txt', data, fmt = '%s')
 
