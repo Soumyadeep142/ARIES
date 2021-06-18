@@ -81,7 +81,10 @@ SD_mag=[]
 for (i,j) in zip(idn, mag_list):
 	avg_mag.append(statistics.mean(j))
 	SD_mag.append(statistics.stdev(j))
-	
+
+data=column_stack((idn, avg_mag, SD_mag))
+savetxt('Mag_avg_SD_1st_Cut.txt', data, fmt = '%s')
+first=len(idn)
 #Removing Outliers
 co=0
 mag_list_array=[]
@@ -89,21 +92,21 @@ error_list_array=[]
 for j in range(len(mag_list)):
 	co+=1
 	print('Star{0}'.format(co))
-	for c in range(3):
+	for c in range(6):
 		avg=avg_mag[j]
 		SD=SD_mag[j]
 		f=mag_list[j]
 		err=error_list[j]
 		s=0
-		avg_mag_list=[]
+		mag_list_new=[]
 		final_error_list=[]
 		for m in f:
 			if (m>=(avg-3*SD) and m<=(avg+3*SD)):
-				avg_mag_list.append(m)
+				mag_list_new.append(m)
 				final_error_list.append(err[s])
 				s+=1
-		avg_magn=statistics.mean(avg_mag_list)
-		SD_magn=statistics.stdev(avg_mag_list)
+		avg_magn=statistics.mean(mag_list_new)
+		SD_magn=statistics.stdev(mag_list_new)
 		error_list[j]=final_error_list
 		avg_mag[j]=avg_magn
 		SD_mag[j]=SD_magn
@@ -127,7 +130,23 @@ for (i,j) in zip(idn, mag_list):
 	avg_mag.append(statistics.mean(j))
 	SD_mag.append(statistics.stdev(j))
 idn=idn_final
+second=len(idn)
+print(first, second)
+#Mean error
+Error_mean=[]
+s=0
+for i in error_list:
+	s+=1
+	print('1E{0}'.format(s))
+	Error_mean.append(statistics.mean(i))
+data=column_stack((idn, avg_mag, SD_mag, Error_mean))
+savetxt('Mag_avg_SD_2nd_Cut_mean_error.txt', data, fmt = '%s')
 
-data=column_stack((idn, avg_mag, SD_mag))
-savetxt('Mag_avg_SD.txt', data, fmt = '%s')
-
+Quadrature=[]
+s=0
+for i in error_list:
+	s+=1
+	print('2E{0}'.format(s))
+	Quadrature.append(sqrt(sum(square(i)))/len(i))
+data=column_stack((idn, avg_mag, SD_mag, Quadrature))
+savetxt('Mag_avg_SD_2nd_Cut_quad_error.txt', data, fmt = '%s')
