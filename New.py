@@ -37,14 +37,15 @@ for std in stdfiles:
 
 print(idn)
 '''
-
-A=[ID[1465], X_axis_ref[1465], Y_axis_ref[1465]]
+n=5748
+A=[ID[n], X_axis_ref[n], Y_axis_ref[n]]
 a=0
+mag=[]
 for std in stdfiles:
 	x_std, y_std, mag_std=loadtxt(std, usecols=(1,2,3), skiprows=3, unpack='true')
 	for (x,y,z) in zip(x_std, y_std, mag_std):
 		dist=distance(x,y,A[1],A[2])
-		if dist<=300:
+		if dist<=3:
 			print(z, std)
 			mag.append(z)
 			
