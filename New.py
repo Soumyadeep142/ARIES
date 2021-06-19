@@ -37,19 +37,24 @@ for std in stdfiles:
 
 print(idn)
 '''
-n=5748
+n=random.randint(1,10000)
 A=[ID[n], X_axis_ref[n], Y_axis_ref[n]]
 a=0
 mag=[]
+e=[]
 for std in stdfiles:
 	x_std, y_std, mag_std=loadtxt(std, usecols=(1,2,3), skiprows=3, unpack='true')
+
+	q=0
 	for (x,y,z) in zip(x_std, y_std, mag_std):
 		dist=distance(x,y,A[1],A[2])
 		if dist<=3:
-			print(z, std)
+			#print(z, std)
 			mag.append(z)
-			
-			break
+			q+=1
+	e.append(q)
 	a+=1
 	print(a)
+print(e)
 savetxt('new_op.txt', mag)
+print(n)
