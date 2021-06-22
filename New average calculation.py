@@ -21,15 +21,16 @@ for i in id:
 c = 1
 for std in std_files:
     std_x, std_y, std_m, std_e = np.loadtxt(std, skiprows = 3, usecols = (1, 2, 3, 4), unpack = True)
-    print(f'checking for file {c}')
+    print(f'checking for file {c}: {std}')
     for (x, y, m, e) in zip(std_x, std_y, std_m, std_e):
-        for n in range(22067):
-            d = math.dist([x, y], [x_ref[n], y_ref[n]])
-            if d <= 2:
-                mag_dict[n + 1].append(m)
-                err_dict[n + 1].append(e)
-                files_dict[n + 1].append(std)
-                break
+        if e < 0.05:
+            for n in range(22067):
+                d = math.dist([x, y], [x_ref[n], y_ref[n]])
+                if d <= 2:
+                    mag_dict[n + 1].append(m)
+                    err_dict[n + 1].append(e)
+                    files_dict[n + 1].append(std)
+                    break
 
     c += 1
 
@@ -39,7 +40,7 @@ for i in id:
         final_id.append(i)
 
 print('25% condition check completed')
-print('Number of stars after first cut', len(final_id))
+print('Number of stars after first cut: ', len(final_id))
 
 final_files = {}
 avg_mag = []
