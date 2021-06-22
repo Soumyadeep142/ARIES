@@ -45,11 +45,14 @@ print('Number of stars after first cut: ', len(final_id))
 final_files = {}
 avg_mag = []
 avg_err = []
+SD_list = []
 for i in final_id:
     avg_m = np.mean(mag_dict[i])
     avg_e = np.mean(err_dict[i])
+    SD_m = np.std(mag_dict[i])
     avg_mag.append(avg_m)
     avg_err.append(avg_e)
+    SD_list.append(SD_m)
     final_files[i] = files_dict[i]
 
 df = pd.DataFrame.from_dict(final_files, orient = 'index')
@@ -57,6 +60,7 @@ df.to_csv('stars_with_files.csv')
 print('csv saved')
 
 
-data = np.column_stack((final_id, avg_mag, avg_err))
-np.savetxt('new_avg_mag_error.txt', data, fmt='%s')
+data = np.column_stack((final_id, avg_mag, SD_list, avg_err))
+np.savetxt('new_avg_mag_error_2.txt', data, fmt='%s')
 print('txt file saved')
+
