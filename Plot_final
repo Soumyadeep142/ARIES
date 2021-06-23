@@ -1,12 +1,10 @@
-# GNUPLOT Program
-
 set term pdfcairo color
 set output 'Mean_Mag_Error.pdf'
 set xlabel 'Avg Magnitude'
 set ylabel 'Avg Error'
-set title 'mean mag vs Mean Error'
-set pointsize .2
+set title 'Mean mag vs Mean Error'
+set pointsize .5
 #set xrange[13:21]
 set grid
-plot 'Second_cut.txt' u 2:3 notitle pt 7
+plot 'Second_cut.txt' u 2:3 notitle ps 0.2 pt 5 lc rgb 'green', 'error_median.txt' u 1:2 notitle pt 9 lc rgb 'black'
 
