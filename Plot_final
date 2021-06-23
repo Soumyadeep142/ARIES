@@ -1,3 +1,5 @@
+# GNUPLOT Program
+
 set term pdfcairo color
 set output 'Mean_Mag_Error.pdf'
 set xlabel 'Avg Magnitude'
