@@ -1,5 +1,6 @@
 from numpy import *
 from math import floor, ceil
+
 idn, mag, error, SD=loadtxt('Second_cut.txt', unpack='true')
 A=arange(floor(min(mag)), ceil(max(mag))+1, 1)
 #Bins=[[]]*(len(A)-1)
