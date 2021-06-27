@@ -3,7 +3,13 @@ import glob
 import math
 import pandas as pd
 #List of all .std files
-std_files = [f for f in glob.glob("*.std")]
+#std_files = [f for f in glob.glob("*.std")]
+std_files = [r"D:\SRFP Reference Materials\bhumika_taneja\data_NMS_I\19981122i03.std",
+r"D:\SRFP Reference Materials\bhumika_taneja\data_NMS_I\19981121i01.std",
+r"D:\SRFP Reference Materials\bhumika_taneja\data_NMS_I\19981121i02.std",
+r"D:\SRFP Reference Materials\bhumika_taneja\data_NMS_I\19981122i01.std",
+r"D:\SRFP Reference Materials\bhumika_taneja\data_NMS_I\19981122i02.std"]
+
 #Loading reference file
 id_ref, x_ref, y_ref = np.loadtxt('refstars_new.list', unpack = True, usecols = (0, 1, 2))
 #Loading second cut file
@@ -18,18 +24,18 @@ c = 1
 for std in std_files:
     std_id, std_x, std_y, std_e = np.loadtxt(std, skiprows = 3, usecols = (0, 1, 2, 4), unpack = True)
     print(f'working for file {c}: {std}')
-    for (i, x, y, e) in zip(std_id, std_x, std_y, std_e):
-        if e < 0.05:
-            for n in id_sc:
-                pos = np.where(id_ref == n)
-                x1 = x_ref[pos].item()
-                y1 = y_ref[pos].item()
-                d = math.dist([x, y], [x1, y1])
-                if d <= 2:
-                    id_dict[n].append(std_id)
-                    break
-                else:
-                    id_dict[n].append(-1)
+    for n in id_sc:
+        pos = np.where(id_ref == n)
+        x1 = x_ref[pos].item()
+        y1 = y_ref[pos].item()
+        for i, x, y, e in zip(std_id, std_x, std_y, std_e):
+            d = math.dist([x, y], [x1, y1])
+            if d <= 2:
+                id_dict[n].append(i)
+                break
+            else:
+                id_dict[n].append(-1)
+                break
 
     c += 1
 
