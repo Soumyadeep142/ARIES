@@ -4,7 +4,7 @@ import math
 import statistics
 from matplotlib.pyplot import *
 
-no=2 # Bin number
+no=3 # Bin number
 
 #For clearing the nan elements
 def clean_list(A):
@@ -43,7 +43,8 @@ for i in range(len(idn)):
 			#Finding the time
 			ps=where(frame==std_i)
 			time=JD[ps].item()
-			Time.append(time[-4:])
+
+			Time.append( round(float(time)-2450000,6))
 			S1=int(idn[i])
 			S2=int(idn[j])
 
