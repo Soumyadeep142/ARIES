@@ -2,13 +2,13 @@ from numpy import *
 import pandas as pd
 import statistics
 
-for no in range(2,8): #Bin number
+for no in range(3,8): #Bin number
 	def clean_list(A):
 		return [x for x in A if str(x) != 'nan']
 		
 	frame, JD=loadtxt("JD_N_R.list", dtype='str', unpack=True)
 
-	df=pd.read_csv('stars_with_files.csv')
+	df=pd.read_csv('second_cut_stars_with_files.csv')
 	df.reset_index(drop=True, inplace=True)
 	df.set_index('ID', inplace=True)
 
@@ -18,20 +18,26 @@ for no in range(2,8): #Bin number
 
 	Var_idn=loadtxt('Variable{0}.txt'.format(no))
 	Com_idn=loadtxt("Comparison{0}.txt".format(no))
-	C1=Com_idn[0]
-	C=(df.loc[C1].tolist())
-	C=clean_list(C)
+
+	Star1=Com_idn[0]
+	C1=(df.loc[Star1].tolist())
+	C1=clean_list(C1)
+	
+	Star2=Com_idn[1]
+	C2=df.loc[Star2].tolist()
+	C2=clean_list(C2)
+	
 	for i in range(len(Var_idn)):
 		print(i+1, len(Var_idn), 'Bin no {0}'.format(no))
 		T=(df.loc[Var_idn[i]].tolist())
 		T=clean_list(T)
 		
 		S1=int(Var_idn[i])
-		S2=int(C1)
-		common=intersect1d(T,C)
+		S2=int(Star1)
+		common1=intersect1d(T,C1)
 		Time=[]
 		mag_diff_array=[]
-		for std_i in common:
+		for std_i in common1:
 			#Finding the time
 			ps=where(frame==std_i)
 			time=JD[ps].item()
@@ -40,12 +46,30 @@ for no in range(2,8): #Bin number
 			mag2=float(df_mag.loc[S2][std_i])
 			mag_diff=mag1-mag2
 			mag_diff_array.append(mag_diff)
+		
+		S2=int(Star2)	
+		common2=intersect1d(T,C2)
+		
+		for std_i in common2:
+			if std_i not in common1:
+				#Finding the time
+				ps=where(frame==std_i)
+				time=JD[ps].item()
+				Time.append( round(float(time),6))
+				mag1=float(df_mag.loc[S1][std_i])
+				mag2=float(df_mag.loc[S2][std_i])
+				mag_diff=mag1-mag2
+				mag_diff_array.append(mag_diff)	
+			
+			
+			
 		avg=mean(mag_diff_array)
 		SD=statistics.stdev(mag_diff_array)
 		mag_diff_new=[]
 		Time_new=[]
+		
 		for (i,j) in zip(mag_diff_array, Time):
-			if (i>avg-3*SD and i<avg+3*SD):
+			if (i>=avg-2*SD and i<=avg+2*SD):
 				mag_diff_new.append(i)
 				Time_new.append(j)
 		data=column_stack((Time_new, mag_diff_new))
