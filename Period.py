@@ -1,7 +1,7 @@
 from numpy import *
 import pandas as pd
 import statistics
-
+data2=[]
 for no in range(3,8): #Bin number
 	def clean_list(A):
 		return [x for x in A if str(x) != 'nan']
@@ -28,6 +28,7 @@ for no in range(3,8): #Bin number
 	C2=clean_list(C2)
 	
 	for i in range(len(Var_idn)):
+		Tt=Var_idn[i]
 		print(i+1, len(Var_idn), 'Bin no {0}'.format(no))
 		T=(df.loc[Var_idn[i]].tolist())
 		T=clean_list(T)
@@ -74,3 +75,5 @@ for no in range(3,8): #Bin number
 				Time_new.append(j)
 		data=column_stack((Time_new, mag_diff_new))
 		savetxt('{0}.txt'.format(S1), data, fmt='%s')
+		data2.append(Tt)
+savetxt('Phase.txt', sort(data2), fmt='%s')
