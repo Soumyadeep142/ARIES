@@ -61,10 +61,12 @@ for Target in Tar_id:
 	Mean_Tar = np.mean(mag_diff_array)
 	if mag_diff >= Mean_Tar - 3 * SD_Tar and mag_diff <= Mean_Tar + 3 * SD_Tar:
 		target_dict[Tar_id].append(mag_diff)
+	tc_mag = list()
+	tc_mag = target_dict[Tar_id]
+	tc_SD = statistics.stdev(tc_mag)
+	if tc_SD >= 3 * SD_Com:
+		Potential_Variable_Stars.append(Target)
 
-
-	#if SD_Tar >= 3 * SD_Com:
-		#Potential_Variable_Stars.append(Target)
 
 
 
