@@ -80,4 +80,4 @@ for no in range(3,8): #Bin number
 			data3.append(S1)
 		data2.append(Tt)
 savetxt('Phase.txt', sort(data2), fmt='%s')
-savetxt('Non_Thresold', sort(data3), fmt='%s')
+savetxt('Non_Thresold.txt', sort(data3), fmt='%s')
