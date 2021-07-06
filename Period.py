@@ -2,6 +2,7 @@ from numpy import *
 import pandas as pd
 import statistics
 data2=[]
+data3=[]
 for no in range(3,8): #Bin number
 	def clean_list(A):
 		return [x for x in A if str(x) != 'nan']
@@ -75,5 +76,8 @@ for no in range(3,8): #Bin number
 				Time_new.append(j)
 		data=column_stack((Time_new, mag_diff_new))
 		savetxt('{0}.txt'.format(S1), data, fmt='%s')
+		if len(mag_diff_new)<=0.25*746:
+			data3.append(S1)
 		data2.append(Tt)
 savetxt('Phase.txt', sort(data2), fmt='%s')
+savetxt('Non_Thresold', sort(data3), fmt='%s')
