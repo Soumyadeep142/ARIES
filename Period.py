@@ -3,6 +3,7 @@ import pandas as pd
 import statistics
 data2=[]
 data3=[]
+data4=[]
 for no in range(3,8): #Bin number
 	def clean_list(A):
 		return [x for x in A if str(x) != 'nan']
@@ -29,7 +30,6 @@ for no in range(3,8): #Bin number
 	C2=clean_list(C2)
 	
 	for i in range(len(Var_idn)):
-		Tt=Var_idn[i]
 		print(i+1, len(Var_idn), 'Bin no {0}'.format(no))
 		T=(df.loc[Var_idn[i]].tolist())
 		T=clean_list(T)
@@ -78,6 +78,9 @@ for no in range(3,8): #Bin number
 		savetxt('{0}.txt'.format(S1), data, fmt='%s')
 		if len(mag_diff_new)<=0.25*746:
 			data3.append(S1)
-		data2.append(Tt)
-savetxt('Phase.txt', sort(data2), fmt='%s')
+		else:
+			data4.append(S1)
+		data2.append(S1)
+savetxt('Period.txt', sort(data2), fmt='%s')
 savetxt('Non_Thresold.txt', sort(data3), fmt='%s')
+savetxt("Thresold.txt", sort(data4), fmt='%s')
