@@ -74,20 +74,9 @@ for no in range(3,8): #Bin number
 			if (i>=avg-2*SD and i<=avg+2*SD):
 				mag_diff_new.append(i)
 				Time_new.append(j)
-
-
-		updated_time = []
-		updated_mag_diff = []
-		for t1, m1 in zip(Time_new, mag_diff_new):
-			for t2, m2 in zip(Time_new, mag_diff_new):
-				if t2 > t1:
-					if (t2 - t1 < 0.003472 and m2 - m1 > 0.3) or (t2 - t1 < 1 and m2 - m1 > 0.4) or (m2 - m1 > 0.5):
-						updated_time.append(t1)
-						updated_mag_diff.append(m1)
-
-		data=column_stack((updated_time, updated_mag_diff))
+		data=column_stack((Time_new, mag_diff_new))
 		savetxt('{0}.txt'.format(S1), data, fmt='%s')
-		if len(updated_mag_diff) <= 0.25*746:
+		if len(mag_diff_new)<=0.25*746:
 			data3.append(S1)
 		else:
 			data4.append(S1)
