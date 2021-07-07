@@ -88,20 +88,27 @@ for no in range(3,8): #Bin number
 						updated_time.append(t1)
 						updated_mag_diff.append(m1)
 		'''
-		
-		y=0
-		while y<len(Time_New)-1:
-			t1=Time_new[y]
-			t2=Time_new[y+1]
-			m1=mag_diff_new[y]
-			m2=mag_diff_new[y+1]
+		mag_diff_new=list(mag_diff_new)
+		y=1
+		t1=Time_new[0]
+		m1=mag_diff_new[0]
+		while y <len(Time_new):
+			t2=Time_new[y]
+			m2=mag_diff_new[y]
 			if (t2 - t1 < 0.003472 and abs(m2 - m1) > 0.3) or (t2 - t1 < 1 and abs(m2 - m1) > 0.4) or (abs(m2 - m1) > 0.5):
-				pass
+				updated_time.append(t1)
+				updated_mag_diff.append(m1)
+				t1=t1
+				m1=m1
+				
 			else:
 				updated_time.append(t1)
 				updated_mag_diff.append(m1)
-			y=y+1				
+				t1=t2
+				m1=m2				
 				
+			y=y+1	
+			
 		data=column_stack((updated_time, updated_mag_diff))
 		savetxt('{0}.txt'.format(S1), data, fmt='%s')
 		if len(updated_mag_diff) <= 0.25*746:
