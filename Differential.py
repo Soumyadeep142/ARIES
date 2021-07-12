@@ -33,11 +33,15 @@ for no in range(2,8):
 	
 	common=intersect1d(A,B)
 	mag_com=[]
+	time_com = []
 	for std_i in common:
 		mag_c1=float(df_mag.loc[C1][std_i])
 		mag_c2=float(df_mag.loc[C2][std_i])
 		mag_diff=mag_c1-mag_c2
 		mag_com.append(mag_diff)
+		pos = np.where(frame == std_i)
+		t = JD[pos].item()
+		time_com.append(round(float(t), 6))
 	SD_com=statistics.stdev(mag_com)
 	
 	for Target in Tar_idn:
@@ -98,6 +102,11 @@ for no in range(2,8):
 					Mag_new_list.append(m0)
 					t0=t0
 					m0=m0
+					if t1 in time_com:
+						pos = np.where(time_com == t1)
+						c_m = mag_com[pos].item()
+						time_com.remove(t1)
+						mag_com.remove(c_m)
 				else:
 					Time_new_list.append(t0)
 					Mag_new_list.append(m0)
@@ -109,6 +118,11 @@ for no in range(2,8):
 					Mag_new_list.append(m0)
 					t0=t0
 					m0=m0
+					if t1 in time_com:
+						pos = np.where(time_com == t1)
+						c_m = mag_com[pos].item()
+						time_com.remove(t1)
+						mag_com.remove(c_m)
 				else:
 					Time_new_list.append(t0)
 					Mag_new_list.append(m0)
@@ -120,6 +134,11 @@ for no in range(2,8):
 				Mag_new_list.append(m0)
 				t0=t0
 				m0=m0
+				if t1 in time_com:
+						pos = np.where(time_com == t1)
+						c_m = mag_com[pos].item()
+						time_com.remove(t1)
+						mag_com.remove(c_m)
 			
 			else:
 				Time_new_list.append(t0)
