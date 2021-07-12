@@ -42,7 +42,6 @@ for no in range(2,8):
 		pos = np.where(frame == std_i)
 		t = JD[pos].item()
 		time_com.append(round(float(t), 6))
-	SD_com=statistics.stdev(mag_com)
 	
 	for Target in Tar_idn:
 		T=df.loc[Target].tolist()
@@ -103,7 +102,7 @@ for no in range(2,8):
 					t0=t0
 					m0=m0
 					if t1 in time_com:
-						pos = np.where(time_com == t1)
+						pos = where(time_com == t1)
 						c_m = mag_com[pos].item()
 						time_com.remove(t1)
 						mag_com.remove(c_m)
@@ -119,7 +118,7 @@ for no in range(2,8):
 					t0=t0
 					m0=m0
 					if t1 in time_com:
-						pos = np.where(time_com == t1)
+						pos = where(time_com == t1)
 						c_m = mag_com[pos].item()
 						time_com.remove(t1)
 						mag_com.remove(c_m)
@@ -135,7 +134,7 @@ for no in range(2,8):
 				t0=t0
 				m0=m0
 				if t1 in time_com:
-						pos = np.where(time_com == t1)
+						pos = where(time_com == t1)
 						c_m = mag_com[pos].item()
 						time_com.remove(t1)
 						mag_com.remove(c_m)
@@ -149,6 +148,7 @@ for no in range(2,8):
 			m1=mag_diff_array[j+1]
 			j=j+1
 		
+		SD_com=statistics.stdev(mag_com)
 		SD_Tar=statistics.stdev(Mag_new_list)
 		if SD_Tar>=3*SD_com:
 			data=column_stack((Time_new_list, Mag_new_list))
