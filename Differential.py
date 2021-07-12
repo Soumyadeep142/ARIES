@@ -39,7 +39,7 @@ for no in range(2,8):
 		mag_c2=float(df_mag.loc[C2][std_i])
 		mag_diff=mag_c1-mag_c2
 		mag_com.append(mag_diff)
-		pos = np.where(frame == std_i)
+		pos = where(frame == std_i)
 		t = JD[pos].item()
 		time_com.append(round(float(t), 6))
 	
