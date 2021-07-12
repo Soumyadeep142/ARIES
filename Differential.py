@@ -103,9 +103,8 @@ for no in range(2,8):
 					m0=m0
 					if t1 in time_com:
 						pos = where(time_com == t1)
-						c_m = mag_com[pos].item()
-						time_com.remove(t1)
-						mag_com.remove(c_m)
+						delete(time_com, pos)
+						delete(mag_com, pos)
 				else:
 					Time_new_list.append(t0)
 					Mag_new_list.append(m0)
@@ -119,9 +118,8 @@ for no in range(2,8):
 					m0=m0
 					if t1 in time_com:
 						pos = where(time_com == t1)
-						c_m = mag_com[pos].item()
-						time_com.remove(t1)
-						mag_com.remove(c_m)
+						delete(time_com, pos)
+						delete(mag_com, pos)
 				else:
 					Time_new_list.append(t0)
 					Mag_new_list.append(m0)
@@ -135,9 +133,8 @@ for no in range(2,8):
 				m0=m0
 				if t1 in time_com:
 						pos = where(time_com == t1)
-						c_m = mag_com[pos].item()
-						time_com.remove(t1)
-						mag_com.remove(c_m)
+						delete(time_com, pos)
+						delete(mag_com, pos)
 			
 			else:
 				Time_new_list.append(t0)
