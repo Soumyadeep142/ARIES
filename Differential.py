@@ -3,12 +3,14 @@ import math
 import statistics
 import pandas as pd
 
-data2=[]
+
 def clean_list(A):
 	return [x for x in A if str(x) != 'nan']
 
 def quadrature(A,B):
 	 return sqrt(A**2+B**2)
+	
+data2=[]
 for no in range(2,8):
 
 	
