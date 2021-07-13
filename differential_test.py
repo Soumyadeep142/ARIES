@@ -24,38 +24,28 @@ m0 = mag[0]
 time_new_list = []
 mag_new_list = []
 while j < len(time) - 2:
+    time_new_list.append(t0)
+    mag_new_list.append(m0)
     if ((t1 - t0) <= 0.00347):
         if abs(m1 - m0) > 0.3:
-            time_new_list.append(t0)
-            mag_new_list.append(m0)
             t0 = t0
             m0 = m0
         else:
-            time_new_list.append(t0)
-            mag_new_list.append(m0)
             t0 = t1
             m0 = m1
     elif ((t1 - t0) <= 1):
         if abs(m1 - m0) > 0.4:
-            time_new_list.append(t0)
-            mag_new_list.append(m0)
             t0 = t0
             m0 = m0
         else:
-            time_new_list.append(t0)
-            mag_new_list.append(m0)
             t0 = t1
             m0 = m1
 
     elif abs(m1 - m0) > 0.5:
-        time_new_list.append(t0)
-        mag_new_list.append(m0)
         t0 = t0
         m0 = m0
 
     else:
-        time_new_list.append(t0)
-        mag_new_list.append(m0)
         t0 = t1
         m0 = m1
     t1 = time[j + 1]
