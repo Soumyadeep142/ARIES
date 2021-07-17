@@ -1,38 +1,33 @@
 import numpy as np
-import matplotlib.pyplot as plt
-import seaborn
-seaborn.set()
-
-ID = 176.0
-t, mag, dmag = np.loadtxt('{0}_error.txt'.format(ID), unpack = True, usecols = (0, 1, 2))
-t, mag, dmag = zip(*sorted(zip(t, mag, dmag)))
-t0 = t[0]
-
 from gatspy.periodic import LombScargleFast
-model = LombScargleFast().fit(t, mag, dmag)
-periods, power = model.periodogram_auto(nyquist_factor=100)
 
-fig, ax = plt.subplots()
-ax.plot(periods, power)
-ax.set(xlim=(0.2, 1.4), ylim=(0, 0.8),
-       xlabel='period (days)',
-       ylabel='Lomb-Scargle Power')
+ID = np.loadtxt('Period.txt', unpack = True, usecols = (0))
+#print(len(ID))
+P_1 = []
+P_2 = []
+P_3 = []
+P_4 = []
+for i in ID:
+    print('ID: ', i)
+    t, m, e = np.loadtxt(f'{i}_error.txt', usecols = (0, 1, 2), unpack = True)
+    model = LombScargleFast().fit(t, m, e)
+    periods, power = model.periodogram_auto(nyquist_factor=100)
+    try:
+        model.optimizer.period_range = (0.007, 3.0)
+        period = model.find_best_periods(n_periods = 2, return_scores = False)
 
-model.optimizer.period_range=(0.2, 1.4)
-period = model.best_period
-print("period = {0}".format(period))
+        P_1.append(period[0])
+        P_2.append(period[1])
+        P_3.append(period[0] / 2)
+        P_4.append(period[1] / 2)
 
-Phase = []
-Phase2 = []
-for i in range(len(t)):
-    a = (t[i] - t0 / period) - int((t[i] - t0 / period))
-    Phase.append(a)
+    except:
 
-for p in Phase:
-    Phase2.append(p + 1)
-plt.figure()
-plt.scatter(Phase, mag, marker='.')
-plt.scatter(Phase2, mag, marker='.', color = '#1f77b4', label = f'ID: {ID}')
-plt.legend(loc = 'upper right')
-plt.title(f'Period: {period}')
-plt.show()
+        P_1.append(np.nan)
+        P_2.append(np.nan)
+        P_3.append(np.nan)
+        P_4.append(np.nan)
+
+data = np.column_stack((ID, P_1, P_2, P_3, P_4))
+np.savetxt('Updated_Period.txt', data, fmt = '%s')
+print('file saved')
