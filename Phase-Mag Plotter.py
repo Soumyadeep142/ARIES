@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-ID, P_1, P_2, P_3 = np.loadtxt('Updated_Period.txt', unpack = True, usecols = (0, 1, 2, 3))
+ID, P_1, P_2, P_3, P_4 = np.loadtxt('Updated_Period.txt', unpack = True, usecols = (0, 1, 2, 3, 4))
 
 for i, p in zip(ID, P_2):
     if np.isnan(p) == False:
