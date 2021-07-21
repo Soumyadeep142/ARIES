@@ -1,27 +1,45 @@
-import numpy as np
-import matplotlib.pyplot as plt
+from numpy import *
+import statistics
 
-ID, Period= np.loadtxt('Period.txt', unpack = True, usecols = (0, 1))
+ID, Period=loadtxt("Period.txt", unpack='true')
 
-for (i,P) in zip(ID, Period):
-	Phase = []
-	Phase_2 = []
+for i in ID:
 	i=int(i)
-	t, m, e = np.loadtxt(f'{i}_error.txt', usecols=(0, 1, 2), unpack=True)
-	t, m, e = zip(*sorted(zip(t, m, e)))
-	t0 = t[0]
-
-	for j in range(len(t)):
-		a = ((t[j] - t0) / P) - int(((t[j] - t0) / P))
-		Phase.append(a)
-
-	for k in Phase:
-		Phase_2.append(k + 1)
+	Phase, Magnitude, Error=loadtxt('{0}_Phase.txt'.format(i), unpack='true')
+	A=arange(floor(min(Phase)), ceil(max(Phase))+0.1, 0.1)
+	Plot_Phase=[]
+	Plot_Mag=[]
+	Plot_Error=[]
+	print(i)
+	for j in range(len(A)-1):
+		Phase_list=[]
+		Mag_list=[]
+		Err_list=[]
+		k=0
+		for (p,m,e) in zip(Phase, Magnitude, Error):
+			if (p>A[j] and p<=A[j+1]):
+				Phase_list.append(p)
+				Mag_list.append(m)
+				Err_list.append(e)
+				k+=1
 		
-	Final_Phase=Phase+Phase_2
-	Final_Magnitude=m+m
-	Final_Error=e+e
-	Final_Phase, Final_Magnitude, Final_Error = zip(*sorted(zip(Final_Phase, Final_Magnitude, Final_Error )))
-	data=np.column_stack((Final_Phase, Final_Magnitude, Final_Error))
-	np.savetxt('{0}_Phase.txt'.format(i), data, fmt='%s')
 
+		if k==0:
+			pass
+
+		elif k==1:
+			
+			Plot_Phase.append((A[j]+A[j+1])/2)
+			Plot_Mag.append(Mag_list[0])
+			Plot_Error.append(Err_list[0])
+			
+		else:
+			Plot_Phase.append((A[j]+A[j+1])/2)
+			Plot_Mag.append(mean(Mag_list))
+			SD_error=statistics.stdev(Err_list)
+			std_error=SD_error/sqrt(len(Err_list))
+			Plot_Error.append(std_error)	
+
+
+	data=column_stack((Plot_Phase, Plot_Mag, Plot_Error))
+	savetxt('{0}_Bin.txt'.format(i), data, fmt='%s')
