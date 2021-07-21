@@ -3,14 +3,12 @@ import math
 import statistics
 import pandas as pd
 
-
+data2=[]
 def clean_list(A):
 	return [x for x in A if str(x) != 'nan']
 
 def quadrature(A,B):
 	 return sqrt(A**2+B**2)
-	
-data2=[]
 for no in range(2,8):
 
 	
@@ -55,6 +53,7 @@ for no in range(2,8):
 		
 		
 	for Target in Tar_idn:
+		print(Target, no)
 		T=df.loc[Target].tolist()
 		T=clean_list(T)
 		common1=intersect1d(A,T)
@@ -74,7 +73,6 @@ for no in range(2,8):
 			err2=float(df_error.loc[C1][std_i])
 			error=quadrature(err1, err2)
 			err_array.append(error)
-			
 			
 			
 		common2=intersect1d(B,T)
@@ -108,7 +106,8 @@ for no in range(2,8):
 			mag_diff_array=Final_mag_diff_array
 			Time=Final_time
 			err_array=Final_err_array
-			
+
+		
 		#Removing Sudden Change
 		Time, mag_diff_array,err_array=zip(*sorted(zip(Time, mag_diff_array, err_array)))
 		j=1
@@ -177,7 +176,9 @@ for no in range(2,8):
 				
 			t1=Time[j+1]
 			m1=mag_diff_array[j+1]
+			e1=err_array[j+1]
 			j=j+1
+
 		
 		SD_com=statistics.stdev(mag_com)
 		SD_Tar=statistics.stdev(Mag_new_list)
@@ -186,5 +187,5 @@ for no in range(2,8):
 			savetxt('{0}.txt'.format(Target), data, fmt='%s')
 			data2.append(Target)
 			data3=column_stack((Time_new_list, Mag_new_list, Err_new_list))
-			savetxt('{0}_error.txt'.format(Target), data3, fmt='%s')
+			savetxt('{0}_error.txt'.format(int(Target)), data3, fmt='%s')
 savetxt('Period.txt', sort(data2), fmt='%s')
