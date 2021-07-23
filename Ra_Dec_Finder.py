@@ -1,7 +1,5 @@
 import numpy as np
 import pandas as pd
-import glob
-std_files = [f for f in glob.glob("*.std")]
 ID = np.loadtxt('refstars_new.list', unpack = True, usecols = (0))
 X, Y, RA, DEC = np.loadtxt('refstars_new.list', unpack = True, usecols = (1, 2, 3, 4), dtype = str)
 final_id, period = np.loadtxt('Final_Period.txt', unpack = True, usecols = (0, 1))
