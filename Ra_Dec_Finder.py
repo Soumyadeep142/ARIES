@@ -1,7 +1,5 @@
 import numpy as np
 import pandas as pd
-from tabulate import tabulate
-
 ID = np.loadtxt('refstars_new.list', unpack = True, usecols = (0))
 X, Y, RA, DEC = np.loadtxt('refstars_new.list', unpack = True, usecols = (1, 2, 3, 4), dtype = str)
 final_id, period = np.loadtxt('Final_Period.txt', unpack = True, usecols = (0, 1))
@@ -61,13 +59,20 @@ ra_list=list(ra_list)
 dec_list=list(dec_list)
 mag_list=list(mag_list)
 period_list=list(period_list)
-final_id.insert(0, "ID")
-x_list.insert(0, 'X-axis')
-y_list.insert(0, 'Y-axis')
-ra_list.insert(0, 'RA(J2000)')
-dec_list.insert(0, 'Dec(J2000)')
-mag_list.insert(0, 'R(mag)')
-period_list.insert(0, 'Period(days)')
-table=[[final_id[k], x_list[k], y_list[k], ra_list[k], dec_list[k], mag_list[k], period_list[k]] for k in range(len(final_id))]
-print(tabulate(table))
+#final_id.insert(0, "ID")
+#x_list.insert(0, 'X (abscissa)')
+#y_list.insert(0, 'Y (ordinate)')
+#ra_list.insert(0, 'RA (J2000)')
+#dec_list.insert(0, 'Dec (J2000)')
+#mag_list.insert(0, 'I (mag)')
+#period_list.insert(0, 'Period (days)')
+#table=[[final_id[k], x_list[k], y_list[k], ra_list[k], dec_list[k], mag_list[k], period_list[k]] for k in range(len(final_id))]
+#print(tabulate(table))
+#data = np.column_stack((final_id, x_list, y_list, ra_list, dec_list, mag_list, period_list))
+#np.savetxt('Final_Table.dat', data, fmt = '%s')
+headers = ['ID', 'X\n(abscissa)', 'Y\n(ordinate)', 'RA\n(J2000)', 'Dec\n(J2000)', 'I\n(mag)', 'Period\n(days)']
+df = pd.DataFrame(list(zip(final_id, x_list, y_list, ra_list, dec_list, mag_list, period_list)), columns=headers)
+print(df)
+df.to_csv('Final_Table.csv')
+
 
