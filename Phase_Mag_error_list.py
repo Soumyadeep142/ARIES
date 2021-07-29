@@ -36,5 +36,5 @@ for (i,P) in zip(ID, Period):
 	with open('{0}.txt'.format(i), 'w') as f:
 		f.write(tabulate(table))
 		  
-	with open('{0}.txt'.format(i), 'w') as f:
-		f.write(tabulate(table))
+	with open('{0}.txt'.format(i), 'w') as g:
+		g.write(tabulate(table2))
