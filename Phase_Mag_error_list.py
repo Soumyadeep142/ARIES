@@ -29,6 +29,12 @@ for (i,P) in zip(ID, Period):
 	Final_Phase.insert(0, 'Phase')
 	Final_Magnitude.insert(0, 'Magnitude')
 	Final_Error.insert(0, 'Error')
+	t = list(t)
+	t.insert(0, 'Time')
 	table=[[Final_Phase[k], Final_Magnitude[k], Final_Error[k]] for k in range(len(Final_Phase))]
+	table2 = [[t[j], m[j]] for j in range(len(m))
+	with open('{0}.txt'.format(i), 'w') as f:
+		f.write(tabulate(table))
+		  
 	with open('{0}.txt'.format(i), 'w') as f:
 		f.write(tabulate(table))
