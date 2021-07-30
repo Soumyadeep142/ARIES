@@ -1,0 +1,19 @@
+do for [i in "1551 1945 2254 2710 3040 3366 5375 7185 8912 8983 10415 10606 13176 20492"]{
+	#set term pngcairo color
+	set term latex rotate
+	set output i.'.tex'
+
+	set size 0.5,0.8
+	set xlabel 'Phase'
+	set ylabel 'T-C(mag)' rotate by 90
+	set xtics (0, 0.5, 1.0, 1.5, 2.0)
+	set ytics (-1.0, -0.75, -0.5, -0.25, 0, 0.25, 0.5, 0.75, 1)
+	set title i
+	stats i.'_Bin.txt' u 2
+	A= STATS_min
+	B= STATS_max
+	plot [-0.01:2.01] [A-0.2:B+0.2] i.'_Bin.txt' using 1:2:3 notitle  with errorbars pt 7 ps 0.7 lc 'black'
+	}	
+
+
+
