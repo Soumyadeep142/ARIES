@@ -1,0 +1,13 @@
+#GNUPLOT Code
+
+set term pngcairo
+set output 'Mean_Mag_Error.png'
+set xlabel 'Avg Magnitude'
+set ylabel 'Avg Error'
+set title 'Fig 1'
+set pointsize .5
+#set xrange[13:21]
+set grid
+plot 'Third_cut.txt' u 2:3 notitle ps 0.2 pt 5 lc rgb 'green', 'error_median.txt' u 1:2 notitle pt 9 lc rgb 'black'
+
+
