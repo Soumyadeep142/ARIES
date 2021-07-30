@@ -8,7 +8,7 @@ std_files = [f for f in glob.glob("*.std")]
 #Loading reference file
 id_ref, x_ref, y_ref = np.loadtxt('refstars_new.list', unpack = True, usecols = (0, 1, 2))
 #Loading second cut file
-id_sc = np.loadtxt('Second_cut.txt', unpack = True, usecols = (0))
+id_sc = np.loadtxt('Third_cut.txt', unpack = True, usecols = (0))
 
 
 id_dict = {}
