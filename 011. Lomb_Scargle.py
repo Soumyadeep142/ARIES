@@ -1,6 +1,6 @@
 import numpy as np
 from gatspy.periodic import LombScargleFast
-from matplotlib.pyplot import *
+
 ID = np.loadtxt('Period.txt', unpack = True, usecols = (0))
 #print(len(ID))
 P_1 = []
@@ -28,14 +28,7 @@ for i in ID:
         P_2.append(np.nan)
         P_3.append(np.nan)
         P_4.append(np.nan)
-    xlabel('Periods(Days)')
-    ylabel('Lomb-Scargle Power')
-    xlim(0.2,2)
-    
-    title("ID: {0}".format(i))
-    plot(periods, power, color='black')
-    savefig('{0}_power.png'.format(i))
-    clf()
+
 data = np.column_stack((ID, P_1, P_2, P_3, P_4))
 np.savetxt('Range_3_Updated_Period.txt', data, fmt = '%s')
 print('file saved')
